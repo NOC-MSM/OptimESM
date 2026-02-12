@@ -1,0 +1,48 @@
+[slurm]
+# Define directories for SLURM job scripts and logs:
+job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/jobs"
+log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/logs"
+log_prefix = "UKESM1-2-LL_siarea"
+# SLURM batch job submission parameters:
+sbatch_job_name = "nemo_pipeline_ukesm1"
+sbatch_time = "00:10:00"
+sbatch_partition = ""
+sbatch_ntasks = 1
+sbatch_mem = "4G"
+# Define the initial, final and step input patterns for batch job submission:
+ip_start = 1850
+ip_end = 2014
+ip_step = 1
+# Define maximum number of concurrent SLURM jobs:
+max_concurrent_jobs = 1
+# Define Python virtual environment activation command:
+venv_cmd = ""
+
+[inputs]
+# Define NEMO ocean model filepaths used to construct NEMODataTree object:
+# nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20240619/CMIP6/CMIP/MOHC/UKESM1-2/esm-hist/r1i1p1f1/SImon"
+nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20241218/CMIP6/CMIP/MOHC/UKESM1-2/esm-hist/r3i1p1f1/SImon"
+domain_filepath = "/g100/home/userexternal/otooth00/OptimESM/data/CINECA/MOHC/UKESM1_Ofx/domain_cfg_Ofx_UKESM1.nc"
+# Create NEMO model grid datasets from CMORISED variables:
+cmorised = true
+# Domain Properties:
+iperio = true
+nftype = "F"
+read_mask = false
+# -- NEMO icemod (sea-ice) variables --
+icemod_filepath = [ "${nemo_dir}/siconc/gn/v*/siconc_SImon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc", "${nemo_dir}/sivol/gn/v*/sivol_SImon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc" ]
+icemod_vars = [ [ "siconc" ], [ "sivol" ] ]
+
+[diagnostics]
+# Define diagnostics to be computed using NEMODataTree:
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_sea_ice_diags" }
+kwargs = { model_name = "UKESM1-2-LL", units = "percentage" }
+
+[outputs]
+# Define NEMO ocean model pipeline output file:
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/si"
+output_name = "UKESM1-2-LL_esm-hist_r3i1p1f1_si"
+date_format = "M"
+format = "netcdf"
+# Define output dataset chunking:
+chunks = { time_counter = 12 }
