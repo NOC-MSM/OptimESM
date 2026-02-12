@@ -1,0 +1,1 @@
+**All EC-Earth3-ESM-1 NEMO Pipeline Diagnostic Outputs**
