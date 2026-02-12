@@ -1,0 +1,52 @@
+[slurm]
+# Define directories for SLURM job scripts and logs:
+job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/jobs"
+log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/logs"
+log_prefix = "EC-Earth3-ESM-1_osnap"
+# SLURM batch job submission parameters:
+sbatch_job_name = "nemo_pipeline_ec-earth"
+sbatch_time = "00:10:00"
+sbatch_partition = ""
+sbatch_ntasks = 1
+sbatch_mem = "4G"
+# Define the initial, final and step input patterns for batch job submission:
+ip_start = 1850
+ip_end = 2014
+ip_step = 1
+# Define maximum number of concurrent SLURM jobs:
+max_concurrent_jobs = 1
+# Define Python virtual environment activation command:
+venv_cmd = ""
+
+[inputs]
+# Define NEMO ocean model filepaths used to construct NEMODataTree object:
+nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/smhi/CMIP6Plus/TIPMIP/EC-Earth-Consortium/EC-Earth3-ESM-1/esm-up2p0/r1i1p1f1/OPmonLev"
+domain_filepath = "/g100/home/userexternal/otooth00/OptimESM/data/CINECA/SMHI/EC-Earth_Ofx/domain_cfg_Ofx_EC-Earth.nc"
+# Create NEMO model grid datasets from CMORISED variables:
+cmorised = true
+# Domain Properties:
+iperio = true
+nftype = "F"
+read_mask = true
+# -- NEMO gridT (scalar) variables -- #
+gridT_filepath = [ "${nemo_dir}/thetao/gn/v*/thetao_OPmonLev_EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_gn_18*.nc", "${nemo_dir}/so/gn/v*/so_OPmonLev_EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_gn_18*.nc" ]
+gridT_vars = [ [ "thetao" ], [ "so" ] ]
+# -- NEMO U-grid (zonal vector) variables -- #
+gridU_filepath = [ "${nemo_dir}/umo/gn/v*/umo_OPmonLev_EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_gn_18*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_OPmonLev_EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_gn_18*.nc" ]
+gridU_vars = [ [ "umo" ], [ "thkcello" ] ]
+# NEMO V-grid (meridional vector) variables:
+gridV_filepath = [ "${nemo_dir}/vmo/gn/v*/vmo_OPmonLev_EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_gn_18*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_OPmonLev_EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_gn_18*.nc" ]
+gridV_vars = [ [ "vmo" ], [ "thkcello" ] ]
+
+[diagnostics]
+# Define diagnostics to be computed using NEMODataTree:
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "extract_osnap_section" }
+
+[outputs]
+# Define NEMO ocean model pipeline output file:
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/osnap"
+output_name = "EC-Earth3-ESM-1_esm-up2p0_r1i1p1f1_osnap"
+date_format = "M"
+format = "netcdf"
+# Define output dataset chunking:
+chunks = { time_counter = 12 }

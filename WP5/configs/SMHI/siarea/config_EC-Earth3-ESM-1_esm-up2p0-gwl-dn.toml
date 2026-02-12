@@ -1,0 +1,47 @@
+[slurm]
+# Define directories for SLURM job scripts and logs:
+job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/jobs"
+log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/logs"
+log_prefix = "EC-Earth3-ESM-1_siarea"
+# SLURM batch job submission parameters:
+sbatch_job_name = "nemo_pipeline_ec-earth"
+sbatch_time = "00:10:00"
+sbatch_partition = ""
+sbatch_ntasks = 1
+sbatch_mem = "4G"
+# Define the initial, final and step input patterns for batch job submission:
+ip_start = 1850
+ip_end = 2014
+ip_step = 1
+# Define maximum number of concurrent SLURM jobs:
+max_concurrent_jobs = 1
+# Define Python virtual environment activation command:
+venv_cmd = ""
+
+[inputs]
+# Define NEMO ocean model filepaths used to construct NEMODataTree object:
+nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/smhi/CMIP6Plus/TIPMIP/EC-Earth-Consortium/EC-Earth3-ESM-1/esm-up2p0-gwl4p0-50y-dn2p0/r1i1p1f1/SImon"
+domain_filepath = "/g100/home/userexternal/otooth00/OptimESM/data/CINECA/SMHI/EC-Earth_Ofx/domain_cfg_Ofx_EC-Earth.nc"
+# Create NEMO model grid datasets from CMORISED variables:
+cmorised = true
+# Domain Properties:
+iperio = true
+nftype = "F"
+read_mask = true
+# -- NEMO gridT (scalar) variables -- #
+gridT_filepath = [ "${nemo_dir}/siconc/gn/v*/siconc_SImon_EC-Earth3-ESM-1_esm-up2p0-gwl4p0-50y-dn2p0_r1i1p1f1_gn_*.nc" ]
+gridT_vars = [ [ "siconc" ] ]
+
+[diagnostics]
+# Define diagnostics to be computed using NEMODataTree:
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_sea_ice_area" }
+kwargs = { units = "percentage" }
+
+[outputs]
+# Define NEMO ocean model pipeline output file:
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/siarea"
+output_name = "EC-Earth3-ESM-1_esm-up2p0-gwl4p0-50y-dn2p0_r1i1p1f1_siarea"
+date_format = "M"
+format = "netcdf"
+# Define output dataset chunking:
+chunks = { time_counter = 12 }
