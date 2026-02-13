@@ -20,11 +20,7 @@ venv_cmd = ""
 
 [inputs]
 # Define NEMO ocean model filepaths used to construct NEMODataTree object:
-# nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20250327/CMIP6/CMIP/MOHC/UKESM1-2/esm-up2p0-gwl2p0-50y-dn1p0/r1i1p1f1/SImon"
-# nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20250327/CMIP6/CMIP/MOHC/UKESM1-2/esm-up2p0-gwl2p0-50y-dn2p0/r1i1p1f1/SImon"
-# nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20250717/CMIP6/CMIP/MOHC/UKESM1-2/esm-up2p0-gwl3p0-50y-dn2p0/r1i1p1f1/SImon"
-# nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20250717/CMIP6/CMIP/MOHC/UKESM1-2/esm-up2p0-gwl4p0-50y-dn2p0/r1i1p1f1/SImon"
-nemo_dir = "/g100_store/DRES_OptimESM/ESGF/prepub/mohc/20251104/CMIP6/CMIP/MOHC/UKESM1-2/esm-up2p0-gwl4p0-50y-dn1p0/r1i1p1f1/SImon"
+nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/UKESM1-2-LL/esm-up2p0-gwl4p0-50y-dn1p0/r1i1p1f1/SImon"
 domain_filepath = "/g100/home/userexternal/otooth00/OptimESM/data/CINECA/MOHC/UKESM1_Ofx/domain_cfg_Ofx_UKESM1.nc"
 # Create NEMO model grid datasets from CMORISED variables:
 cmorised = true
