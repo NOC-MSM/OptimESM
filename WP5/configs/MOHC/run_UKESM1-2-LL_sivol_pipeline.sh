@@ -12,17 +12,18 @@ set -euo pipefail
 
 # -- Input arguments to NEMO Pipeline -- #
 # Define filepaths:
-config_file=sivol/config_UKESM1_esm-piControl.toml
+config_file=sivol/config_UKESM1_esm-up2p0-gwl-dn.toml
 log_file=UKESM1-2-LL_sivol_pipeline.log
 
 # Run multiple pipelines:
-l_multi=false
+l_multi=true
 
 # Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl
 # exp_ids=("esm-up2p0-gwl2p0" "esm-up2p0-gwl3p0" "esm-up2p0-gwl4p0")
 
 # Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl-dn
-# exp_ids=("esm-up2p0-gwl2p0-50y-dn1p0" "esm-up2p0-gwl2p0-50y-dn2p0" "esm-up2p0-gwl3p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn1p0")
+# exp_ids=("esm-up2p0-gwl2p0-50y-dn1p0" "esm-up2p0-gwl2p0-50y-dn2p0" "esm-up2p0-gwl3p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn2p0")
+exp_ids=("esm-up2p0-gwl4p0-50y-dn1p0")
 
 
 # -- Python Environment -- #
@@ -46,4 +47,3 @@ else
         echo "Completed ==> $exp_id" 
     done
 fi
-

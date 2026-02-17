@@ -15,9 +15,36 @@ set -euo pipefail
 config_file=mlotst/config_UKESM1_esm-up2p0-gwl-dn.toml
 log_file=UKESM1-2-LL_mlotst_pipeline.log
 
+# Run multiple pipelines:
+l_multi=false
+
+# Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl
+# exp_ids=("esm-up2p0-gwl2p0" "esm-up2p0-gwl3p0" "esm-up2p0-gwl4p0")
+
+# Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl-dn
+# exp_ids=("esm-up2p0-gwl2p0-50y-dn1p0" "esm-up2p0-gwl2p0-50y-dn2p0" "esm-up2p0-gwl3p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn1p0")
+# exp_ids=("esm-up2p0-gwl4p0-50y-dn1p0")
+
+
 # -- Python Environment -- #
 # Run this script in the env_optimesm conda virtual environment.
 
-# -- Run NEMO Pipeline CLI -- #
-# nemo_pipeline describe $config_file --log $log_file
-nemo_pipeline run $config_file --log $log_file
+if [ "$l_multi" = false ]; then
+    # -- Run NEMO Pipeline CLI -- #
+    # nemo_pipeline describe $config_file --log $log_file
+    nemo_pipeline run $config_file --log $log_file
+
+else
+    # Iterate over all experiment IDs:
+    for exp_id in "${exp_ids[@]}"; do
+        echo "Running ==> $exp_id"
+        # -- Updating Experiment IDs in config.toml -- #
+        sed -i "s|esm-[^/_]*|$exp_id|g" $config_file
+    
+        # -- Run NEMO Pipeline CLI -- #
+        # nemo_pipeline describe $config_file --log $log_file
+        nemo_pipeline run $config_file --log $log_file
+        echo "Completed ==> $exp_id" 
+    done
+fi
+

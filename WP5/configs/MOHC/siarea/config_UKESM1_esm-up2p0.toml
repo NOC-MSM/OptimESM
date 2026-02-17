@@ -21,7 +21,7 @@ venv_cmd = ""
 [inputs]
 # Define NEMO ocean model filepaths used to construct NEMODataTree object:
 nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/UKESM1-2-LL/esm-up2p0/r1i1p1f1/SImon"
-domain_filepath = "/g100/home/userexternal/otooth00/OptimESM/data/CINECA/MOHC/UKESM1_Ofx/domain_cfg_Ofx_UKESM1.nc"
+domain_filepath = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/UKESM1-2-LL/Ofx/eORCA1_domain_cfg_UKESM1.nc"
 # Create NEMO model grid datasets from CMORISED variables:
 cmorised = true
 # Domain Properties:

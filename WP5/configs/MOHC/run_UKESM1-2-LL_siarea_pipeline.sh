@@ -23,6 +23,7 @@ l_multi=false
 
 # Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl-dn
 # exp_ids=("esm-up2p0-gwl2p0-50y-dn1p0" "esm-up2p0-gwl2p0-50y-dn2p0" "esm-up2p0-gwl3p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn2p0" "esm-up2p0-gwl4p0-50y-dn1p0")
+# exp_ids=("esm-up2p0-gwl4p0-50y-dn1p0")
 
 
 # -- Python Environment -- #
@@ -46,4 +47,3 @@ else
         echo "Completed ==> $exp_id" 
     done
 fi
-
