@@ -1,0 +1,46 @@
+[slurm]
+# Define directories for SLURM job scripts and logs:
+job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/IPSL/jobs"
+log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/IPSL/logs"
+log_prefix = "IPSL-CM6-ESMCO2_sivol"
+# SLURM batch job submission parameters:
+sbatch_job_name = "nemo_pipeline_ipsl"
+sbatch_time = "00:10:00"
+sbatch_partition = ""
+sbatch_ntasks = 1
+sbatch_mem = "4G"
+# Define the initial, final and step input patterns for batch job submission:
+ip_start = 1850
+ip_end = 2014
+ip_step = 1
+# Define maximum number of concurrent SLURM jobs:
+max_concurrent_jobs = 1
+# Define Python virtual environment activation command:
+venv_cmd = ""
+
+[inputs]
+# Define NEMO ocean model filepaths used to construct NEMODataTree object:
+nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/IPSL-CM6-ESMCO2/esm-hist/r2i1p3f1/SImon"
+domain_filepath = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/IPSL-CM6-ESMCO2/Ofx/eORCA1.2_mesh_mask_IPSL.nc"
+# Create NEMO model grid datasets from CMORISED variables:
+cmorised = true
+# Domain Properties:
+iperio = true
+nftype = "F"
+read_mask = true
+# -- NEMO icemod (sea-ice) variables -- #
+icemod_filepath = [ "${nemo_dir}/sivol/gn/v*/sivol_SImon_IPSL-CM6-ESMCO2_esm-hist_r2i1p3f1_gn_*.nc" ]
+icemod_vars = [ [ "sivol" ] ]
+
+[diagnostics]
+# Define diagnostics to be computed using NEMODataTree:
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_sea_ice_volume" }
+
+[outputs]
+# Define NEMO ocean model pipeline output file:
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/IPSL/sivol"
+output_name = "IPSL-CM6-ESMCO2_esm-hist_r2i1p3f1_sivol"
+date_format = "M"
+format = "netcdf"
+# Define output dataset chunking:
+chunks = { time_counter = 12 }
