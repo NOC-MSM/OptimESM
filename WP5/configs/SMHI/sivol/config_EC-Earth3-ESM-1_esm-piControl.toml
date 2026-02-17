@@ -2,7 +2,7 @@
 # Define directories for SLURM job scripts and logs:
 job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/jobs"
 log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/logs"
-log_prefix = "EC-Earth3-ESM-1_siarea"
+log_prefix = "EC-Earth3-ESM-1_sivol"
 # SLURM batch job submission parameters:
 sbatch_job_name = "nemo_pipeline_ec-earth3"
 sbatch_time = "00:10:00"
@@ -21,7 +21,7 @@ venv_cmd = ""
 [inputs]
 # Define NEMO ocean model filepaths used to construct NEMODataTree object:
 nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/EC-Earth3-ESM-1/esm-piControl/r1i1p1f1/SImon"
-domain_filepath = "/g100/home/userexternal/otooth00/OptimESM/data/CINECA/SMHI/EC-Earth_Ofx/domain_cfg_Ofx_EC-Earth.nc"
+domain_filepath = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/EC-Earth3-ESM-1/Ofx/eORCA1_domain_cfg_EC-Earth.nc"
 # Create NEMO model grid datasets from CMORISED variables:
 cmorised = true
 # Domain Properties:
@@ -29,18 +29,17 @@ iperio = true
 nftype = "F"
 read_mask = true
 # -- NEMO gridT (scalar) variables -- #
-gridT_filepath = [ "${nemo_dir}/siconc/gn/v*/siconc_SImon_EC-Earth3-ESM-1_esm-piControl_r1i1p1f1_gn_*.nc" ]
-gridT_vars = [ [ "siconc" ] ]
+gridT_filepath = [ "${nemo_dir}/sivol/gn/v*/sivol_SImon_EC-Earth3-ESM-1_esm-piControl_r1i1p1f1_gn_*.nc" ]
+gridT_vars = [ [ "sivol" ] ]
 
 [diagnostics]
 # Define diagnostics to be computed using NEMODataTree:
-diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_sea_ice_area" }
-kwargs = { units = "percentage" }
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_sea_ice_volume" }
 
 [outputs]
 # Define NEMO ocean model pipeline output file:
-output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/siarea"
-output_name = "EC-Earth3-ESM-1_esm-piControl_r1i1p1f1_siarea"
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/sivol"
+output_name = "EC-Earth3-ESM-1_esm-piControl_r1i1p1f1_sivol"
 date_format = "M"
 format = "netcdf"
 # Define output dataset chunking:

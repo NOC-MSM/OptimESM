@@ -1,28 +1,28 @@
 #!/bin/bash
 
-set -euo pipefail
 # ================================================================
 # run_EC-Earth3-ESM-1_pipeline.sh
 #
 # Description: Run EC-Earth3-ESM-1 NEMO Pipeline in current process.
 #
 # Created By: Ollie Tooth (oliver.tooth@noc.ac.uk)
-# Created On: 2025-11-11   
+# Created On: 2025-12-15
 # ================================================================
+set -euo pipefail
 
 # -- Input arguments to NEMO Pipeline -- #
 # Define filepaths:
-config_file=thetao_so/config_EC-Earth3-ESM-1_esm-piControl.toml
-log_file=EC-Earth3-ESM-1_thetao_so_pipeline.log
+config_file=sivol/config_EC-Earth3-ESM-1_esm-up2p0-gwl-dn.toml
+log_file=EC-Earth3-ESM-1_sivol_pipeline.log
 
 # Run multiple pipelines:
-l_multi=false
+l_multi=true
 
 # Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl
 # exp_ids=("esm-up2p0-gwl1p5" "esm-up2p0-gwl2p0" "esm-up2p0-gwl3p0" "esm-up2p0-gwl4p0" "esm-up2p0-gwl5p0" "esm-up2p0-gwl6p0")
 
 # Define Experiment IDs [l_multi=true] -> esm-up2p0-gwl-dn
-# exp_ids=("esm-up2p0-gwl1p5-50y-dn2p0" "esm-up2p0-gwl2p0-200y-dn2p0" "esm-up2p0-gwl2p0-50y-dn1p0" "esm-up2p0-gwl2p0-50y-dn2p0" "esm-up2p0-gwl3p0-50y-dn2p0" "esm-up2p0-gwl4p0-200y-dn2p0" "esm-up2p0-gwl4p0-50y-dn1p0" "esm-up2p0-gwl4p0-50y-dn2p0")
+exp_ids=("esm-up2p0-gwl1p5-50y-dn2p0" "esm-up2p0-gwl2p0-200y-dn2p0" "esm-up2p0-gwl2p0-50y-dn1p0" "esm-up2p0-gwl2p0-50y-dn2p0" "esm-up2p0-gwl3p0-50y-dn2p0" "esm-up2p0-gwl4p0-200y-dn2p0" "esm-up2p0-gwl4p0-50y-dn1p0" "esm-up2p0-gwl4p0-50y-dn2p0")
 
 
 # -- Python Environment -- #
@@ -46,4 +46,3 @@ else
         echo "Completed ==> $exp_id" 
     done
 fi
-
