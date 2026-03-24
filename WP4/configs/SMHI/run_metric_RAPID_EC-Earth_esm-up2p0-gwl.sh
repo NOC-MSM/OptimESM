@@ -17,16 +17,17 @@ GLOBIGNORE="*"
 
 # -- Input arguments to ./run_metric -- #
 # Filepaths to config file:
-fpath_config=/g100_work/optim_IAC/research/noc/otooth/OptimESM_WP4/configs/SMHI/config_RAPID_EC-Earth.ini
+fpath_config=/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP4/configs/SMHI/config_RAPID_EC-Earth.ini
 
 # Filepaths to eORCA1 monthly mean output files:
 exp_id=r1i1p1f1
+exp_name=esm-up2p0-gwl1p5
 # exp_name=esm-up2p0-gwl2p0
 # exp_name=esm-up2p0-gwl3p0
 # exp_name=esm-up2p0-gwl3p0
 # exp_name=esm-up2p0-gwl4p0
 # exp_name=esm-up2p0-gwl5p0
-exp_name=esm-up2p0-gwl6p0
+# exp_name=esm-up2p0-gwl6p0
 
 fdir="/g100_store/DRES_OptimESM/ESGF/prepub/smhi/CMIP6Plus/TIPMIP/EC-Earth-Consortium/EC-Earth3-ESM-1/${exp_name}/${exp_id}"
 fpath_t="${fdir}/OPmonLev/thetao/gn/v*/thetao_OPmonLev_EC-Earth3-ESM-1_${exp_name}_${exp_id}_gn_*.nc"
