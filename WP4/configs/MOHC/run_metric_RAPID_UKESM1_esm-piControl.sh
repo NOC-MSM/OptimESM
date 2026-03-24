@@ -17,7 +17,7 @@ GLOBIGNORE="*"
 
 # -- Input arguments to ./run_metric -- #
 # Filepaths to config file:
-fpath_config="/g100_work/optim_IAC/research/noc/otooth/OptimESM_WP4/configs/MOHC/config_RAPID_UKESM1.ini"
+fpath_config="/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP4/configs/MOHC/config_RAPID_UKESM1.ini"
 
 # Filepaths to eORCA1 monthly mean output files:
 exp_id=r1i1p1f1
