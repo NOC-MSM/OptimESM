@@ -31,17 +31,18 @@ read_mask = false
 # -- NEMO gridT (scalar) variables -- #
 gridT_filepath = [ "${nemo_dir}/thetao/gn/v*/thetao_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc", "${nemo_dir}/so/gn/v*/so_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc" ]
 gridT_vars = [ [ "thetao" ], [ "so" ] ]
+
 # -- NEMO U-grid (zonal vector) variables -- #
-gridU_filepath = [ "${nemo_dir}/uo/gn/v*/uo_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc" ]
-gridU_vars = [ [ "uo" ], [ "thkcello" ] ]
-# NEMO V-grid (meridional vector) variables:
-gridV_filepath = [ "${nemo_dir}/vo/gn/v*/vo_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc" ]
-gridV_vars = [ [ "vo" ], [ "thkcello" ] ]
+gridU_filepath = [ "${nemo_dir}/umo/gn/v*/umo_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc" ]
+gridU_vars = [ [ "umo" ] ]
+
+# -- NEMO V-grid (meridional vector) variables -- #
+gridV_filepath = [ "${nemo_dir}/vmo/gn/v*/vmo_Omon_UKESM1-2-LL_esm-up2p0-gwl4p0_r1i1p1f1_gn_[23, 24, 25]*.nc" ]
+gridV_vars = [ [ "vmo" ] ]
 
 [diagnostics]
 # Define diagnostics to be computed using NEMODataTree:
-diagnostic = { module = "nemo_pipeline.diagnostics.core", function = "extract_osnap_section" }
-kwargs = { include_eiv = false }
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "extract_osnap_section" }
 
 [outputs]
 # Define NEMO ocean model pipeline output file:

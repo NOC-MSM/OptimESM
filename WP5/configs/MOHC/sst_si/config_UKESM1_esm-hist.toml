@@ -2,7 +2,7 @@
 # Define directories for SLURM job scripts and logs:
 job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/jobs"
 log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/logs"
-log_prefix = "UKESM1-2-LL_siarea"
+log_prefix = "UKESM1-2-LL_sst_si"
 # SLURM batch job submission parameters:
 sbatch_job_name = "nemo_pipeline_ukesm1"
 sbatch_time = "00:10:00"
@@ -20,7 +20,7 @@ venv_cmd = ""
 
 [inputs]
 # Define NEMO ocean model filepaths used to construct NEMODataTree object:
-nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/UKESM1-2-LL/esm-hist/r3i1p1f1/Omon"
+nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/UKESM1-2-LL/esm-hist/r1i1p1f1"
 domain_filepath = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/UKESM1-2-LL/Ofx/eORCA1_domain_cfg_UKESM1.nc"
 # Create NEMO model grid datasets from CMORISED variables:
 cmorised = true
@@ -30,25 +30,22 @@ nftype = "F"
 read_mask = false
 
 # -- NEMO gridT (scalar) variables -- #
-gridT_filepath = [ "${nemo_dir}/thetao/gn/v*/thetao_Omon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc", "${nemo_dir}/so/gn/v*/so_Omon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc" ]
-gridT_vars = [ [ "thetao" ], [ "so" ] ]
+gridT_filepath = [ "${nemo_dir}/Omon/tos/gn/v*/tos_Omon_UKESM1-2-LL_esm-hist_r1i1p1f1_gn_*.nc" ]
+gridT_vars = [ [ "tos" ] ]
 
-# -- NEMO U-grid (meridional vector) variables-- #
-gridU_filepath = [ "${nemo_dir}/umo/gn/v*/umo_Omon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_Omon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc"  ]
-gridU_vars = [ [ "umo" ], ["thkcello"] ]
-
-# -- NEMO V-grid (meridional vector) variables-- #
-gridV_filepath = [ "${nemo_dir}/vmo/gn/v*/vmo_Omon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_Omon_UKESM1-2-LL_esm-hist_r3i1p1f1_gn_*.nc" ]
-gridV_vars = [ [ "vmo" ], ["thkcello"] ]
+# -- NEMO icemod (sea-ice) variables -- #
+icemod_filepath = [ "${nemo_dir}/SImon/siconc/gn/v*/siconc_SImon_UKESM1-2-LL_esm-hist_r1i1p1f1_gn_*.nc" ]
+icemod_vars = [ [ "siconc" ] ]
 
 [diagnostics]
 # Define diagnostics to be computed using NEMODataTree:
-diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "extract_osnap_section" }
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_iho_sst_si_diags" }
+kwargs = { model_name = "UKESM1-2-LL", units = "percentage" }
 
 [outputs]
 # Define NEMO ocean model pipeline output file:
-output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/osnap"
-output_name = "UKESM1-2-LL_esm-hist_r3i1p1f1_osnap"
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/MOHC/sst_si"
+output_name = "UKESM1-2-LL_esm-hist_r1i1p1f1_sst_si"
 date_format = "M"
 format = "netcdf"
 # Define output dataset chunking:
