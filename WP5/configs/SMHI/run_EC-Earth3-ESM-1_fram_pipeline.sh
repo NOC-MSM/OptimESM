@@ -12,14 +12,15 @@ set -euo pipefail
 
 # -- Input arguments to NEMO Pipeline -- #
 # Define filepaths:
-config_file=osnap/config_EC-Earth3-ESM-1_esm-hist.toml
-log_file=EC-Earth3-ESM-1_osnap_pipeline.log
+config_file=fram/config_EC-Earth3-ESM-1_esm-hist.toml
+log_file=EC-Earth3-ESM-1_fram_pipeline.log
 
 # Run multiple pipelines:
 l_multi=true
 
 # Define Experiment IDs [l_multi=true] -> esm-hist ensemble members...
-member_ids=("r1i1p1f1" "r2i1p1f1" "r3i1p1f1" "r5i1p1f1")
+# member_ids=("r1i1p1f1" "r2i1p1f1" "r3i1p1f1" "r5i1p1f1")
+member_ids=("r1i1p1f1" "r2i1p1f1")
 
 # -- Python Environment -- #
 # Run this script in the env_optimesm conda virtual environment.

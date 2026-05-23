@@ -12,8 +12,8 @@ set -euo pipefail
 
 # -- Input arguments to NEMO Pipeline -- #
 # Define filepaths:
-config_file=osnap/config_EC-Earth3-ESM-1_esm-hist.toml
-log_file=EC-Earth3-ESM-1_osnap_pipeline.log
+config_file=rapid/config_EC-Earth3-ESM-1_esm-hist.toml
+log_file=EC-Earth3-ESM-1_rapid_pipeline.log
 
 # Run multiple pipelines:
 l_multi=true

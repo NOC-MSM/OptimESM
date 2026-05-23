@@ -2,7 +2,7 @@
 # Define directories for SLURM job scripts and logs:
 job_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/jobs"
 log_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/logs"
-log_prefix = "EC-Earth3-ESM-1_osnap"
+log_prefix = "EC-Earth3-ESM-1_sst"
 # SLURM batch job submission parameters:
 sbatch_job_name = "nemo_pipeline_ec-earth"
 sbatch_time = "00:10:00"
@@ -20,7 +20,7 @@ venv_cmd = ""
 
 [inputs]
 # Define NEMO ocean model filepaths used to construct NEMODataTree object:
-nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/EC-Earth3-ESM-1/esm-hist/r1i1p1f1/OPmonLev"
+nemo_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/EC-Earth3-ESM-1/esm-hist/r1i1p1f1"
 domain_filepath = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/data/EC-Earth3-ESM-1/Ofx/eORCA1_domain_cfg_EC-Earth.nc"
 # Create NEMO model grid datasets from CMORISED variables:
 cmorised = true
@@ -28,25 +28,24 @@ cmorised = true
 iperio = true
 nftype = "F"
 read_mask = true
+
 # -- NEMO gridT (scalar) variables -- #
-gridT_filepath = [ "${nemo_dir}/thetao/gn/v*/thetao_OPmonLev_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc", "${nemo_dir}/so/gn/v*/so_OPmonLev_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc" ]
-gridT_vars = [ [ "thetao" ], [ "so" ] ]
-# -- NEMO U-grid (zonal vector) variables -- #
-gridU_filepath = [ "${nemo_dir}/uo/gn/v*/uo_OPmonLev_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_OPmonLev_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc" ]
-gridU_vars = [ [ "uo" ], [ "thkcello" ] ]
-# NEMO V-grid (meridional vector) variables:
-gridV_filepath = [ "${nemo_dir}/vo/gn/v*/vo_OPmonLev_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc", "${nemo_dir}/thkcello/gn/v*/thkcello_OPmonLev_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc" ]
-gridV_vars = [ [ "vo" ], [ "thkcello" ] ]
+gridT_filepath = [ "${nemo_dir}/OPmon/tos/gn/v*/tos_OPmon_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc" ]
+gridT_vars = [ [ "tos" ] ]
+
+# -- NEMO icemod (sea-ice) variables -- #
+icemod_filepath = [ "${nemo_dir}/SImon/siconc/gn/v*/siconc_SImon_EC-Earth3-ESM-1_esm-hist_r1i1p1f1_gn_*.nc" ]
+icemod_vars = [ [ "siconc" ] ]
 
 [diagnostics]
 # Define diagnostics to be computed using NEMODataTree:
-diagnostic = { module = "nemo_pipeline.diagnostics.core", function = "extract_osnap_section" }
-kwargs = { include_eiv = false }
+diagnostic = { module = "nemo_pipeline.diagnostics.usrdef", function = "compute_iho_sst_si_diags" }
+kwargs = { model_name = "EC-Earth3-ESM-1", units = "percentage" }
 
 [outputs]
 # Define NEMO ocean model pipeline output file:
-output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/osnap"
-output_name = "EC-Earth3-ESM-1_esm-hist_r1i1p1f1_osnap"
+output_dir = "/g100_work/optim_IAC/research/noc/otooth/OptimESM/WP5/data/SMHI/sst_si"
+output_name = "EC-Earth3-ESM-1_esm-hist_r1i1p1f1_sst_si"
 date_format = "M"
 format = "netcdf"
 # Define output dataset chunking:
